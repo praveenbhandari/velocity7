@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js" async></script>
+        <script src="../bin/jsencrypt.min.js"></script>
+    </head>
+<body>
+    <input name="in" id="in" type="text">text</input>
+    <input name="key" id="key" type="text">key</input>
+    <input name="enc" id="enc" type="text">enc</input>
+    <label name="in" id="in">op</label>
+    <!-- <button onclick="as()" >encrypt</button>
+    <button onclick="de()" >decrypt</button> -->
+
+    <button onclick="encrypt()" >encrypt</button> 
+    <button onclick="decrypt()" >decrypt</button>
+    </br>
+    <button onclick="gett()" >gettttt</button>
+
+<!-- AES encrypt and decrypt -->
+<script>
+
+
+// const url="https://eve.idfy.com/v3/tasks?request_id=f375b6b3-80bf-40f6-92cb-50276e849d99";
+
+// const app="";
+async function gett(){
+
+    // const response=await fetch("https://randomuser.me/api/");
+    // const data = await response.json();
+    // console.log("hmm")
+    // console.log(data.results);
+
+    // import axios from "axios";
+
+const options = {
+  method: 'GET',
+  url: 'https://timetable-lookup.p.rapidapi.com/airports/',
+  headers: {
+    'X-RapidAPI-Key': '5cfb565aafmshc1ca8119e68a27dp1feb90jsn27033662eed0',
+    'X-RapidAPI-Host': 'timetable-lookup.p.rapidapi.com'
+  }
+};
+
+axios.request(options).then(function (response) {
+	// console.log(response.data);
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(response.data,"text/xml");
+    console.log(xmlDoc.getElementsByTagName("Airports"));
+    for(var i=0;i<xmlDoc.getElementsByTagName("Airports").childElementCount;i++){
+        console.log(xmlDoc.getElementsByTagName("Airports").childNode["Airport"].attributes[3]+"</br>")
+
+    }
+
+
+}).catch(function (error) {
+	console.error(error);
+});
+
+
+
+
+
+
+}
+gett();
+
+
+
+
+    function encrypt() {
+        var message=document.getElementById('in').value;
+        var key=document.getElementById('key').value;
+// console.log(message);
+    // var message = 'praveen';  
+    // var key= 'abc123XYZ';
+    var encrypted = CryptoJS.AES.encrypt(message, key);  
+    console.log("encrypt : ",encrypted.toString());
+     
+    }
+function decrypt(){
+    var encc=document.getElementById('enc').value;
+    var key=document.getElementById('key').value;
+    // console.log(encc,key);
+    var decrypted = CryptoJS.AES.decrypt(encc, key);
+    console.log("decryp : ",decrypted.toString(CryptoJS.enc.Utf8));
+
+
+
+// var message="document.getElementById('in')";
+//         var key="document.getElementById('key')";
+//         var encc = CryptoJS.AES.encrypt(message, key);  
+//     console.log(encc.toString());
+//     var decrypted = CryptoJS.AES.decrypt(encc, key);
+//     console.log(decrypted.toString(CryptoJS.enc.Utf8));
+}
+    </script>
+
+
+<!-- RSA -->
+<!-- <script>
+    function as(){
+        var rsa=new JSEncrypt();
+        var pub="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCLKWSeP0lzyjGpmlUXTLfhg3SZrMRLsJqWHf+ujOOM3Pa9GHpZqj3u0aiYPzwvMjL2l7Fx9mw2QENVQ0kcKDIzIfAIKDL1mSJagnicN9sGTnMmnWbuSzfqKJ1WTDz0dciInGQWEaAcJFr6BlxeFJAq8Z/LMlgLWnxAVR6EPW0EpQIDAQAB";
+        rsa.setPublicKey(pub);
+        var a=rsa.encrypt("hii");
+        console.log(rsa);
+        console.log(rsa.getPublicKey().toString());
+    }
+
+    function de(){
+        var rsa=new JSEncrypt();
+        rsa.setPrivatekey();
+    var inp="";
+        var dd=rsa.decrypt(inp);
+        console.log("decrypt : ",dd);
+    }
+</script> -->
+
+
+
+</body>
+</html>
